@@ -52,7 +52,7 @@ def input_students
     end
 
     students << {name: name, cohort: cohort.to_sym}
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{students.count} #{students.count > 1 ? "students" : "student"}"
 
     puts "Name?"
     name = gets.chomp
@@ -75,7 +75,7 @@ def print(names)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  puts "Overall, we have #{names.count} great #{names.count > 1 ? "students" : "student"}"
 end
 
 students = input_students
