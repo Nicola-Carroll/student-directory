@@ -14,7 +14,7 @@
 # ]
 
 def input_students
-  puts "Please enter the name, age, and favourite food of the students"
+  puts "Please enter the name and cohort if known of the students"
   puts "To finish, just hit return twice"
   
   students = []
@@ -22,13 +22,36 @@ def input_students
   puts "Name?"
   name = gets.chomp
 
-  while !name.empty? do
-    puts "Age?"
-    age = gets.chomp
-    puts "Favourite food?"
-    food = gets.chomp
 
-    students << {name: name, age: age, favourite_food: food, cohort: :november}
+  while !name.empty? do
+    puts "Cohort?"
+    cohort = gets.chomp
+
+    months = [
+      'january',
+      'february',
+      'march',
+      'april',
+      'may',
+      'june',
+      'july',
+      'august',
+      'september',
+      'october',
+      'november',
+      'december'
+    ]
+    
+    while !months.include?(cohort) do
+      if cohort.empty?
+        cohort = 'november'
+      else
+        puts "cohort misspelt, please try again"
+        cohort = gets.chomp
+      end
+    end
+
+    students << {name: name, cohort: cohort.to_sym}
     puts "Now we have #{students.count} students"
 
     puts "Name?"
@@ -46,7 +69,7 @@ end
 def print(names)
   count = 0
   while count < names.length
-    puts "#{count + 1}. #{names[count][:name]} is #{names[count][:age]} and likes #{names[count][:favourite_food]} (#{names[count][:cohort]} cohort)".center(200)
+    puts "#{count + 1}. #{names[count][:name]} (#{names[count][:cohort]} cohort)".center(200)
     count += 1
   end
 end
