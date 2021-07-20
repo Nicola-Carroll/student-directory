@@ -38,7 +38,7 @@ end
 
 def print(names)
   names.each_with_index do |student, index|
-    if student[:name].upcase.chr == 'D'
+    if student[:name].chars.length < 12
       puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
