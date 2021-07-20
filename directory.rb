@@ -39,14 +39,14 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(200)
+  puts "-------------".center(200)
 end
 
 def print(names)
   count = 0
   while count < names.length
-    puts "#{count + 1}. #{names[count][:name]} is #{names[count][:age]} and likes #{names[count][:favourite_food]} (#{names[count][:cohort]} cohort)"
+    puts "#{count + 1}. #{names[count][:name]} is #{names[count][:age]} and likes #{names[count][:favourite_food]} (#{names[count][:cohort]} cohort)".center(200)
     count += 1
   end
 end
