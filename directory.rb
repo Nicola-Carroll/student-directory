@@ -79,6 +79,24 @@ def print_footer(names)
 end
 
 students = input_students
+
 print_header
 print(students)
 print_footer(students)
+
+students_by_cohort = {}
+
+students.each do |student|
+  month = student[:cohort]
+  name = student[:name]
+  if students_by_cohort[month].nil?
+    students_by_cohort[month] = [name]
+  else
+    students_by_cohort[month].push(name)
+  end
+end
+
+students_by_cohort.each do |cohort, names|
+  puts cohort
+  puts names
+end
