@@ -14,17 +14,24 @@
 # ]
 
 def input_students
-  puts "Please enter the name of the students"
+  puts "Please enter the name, age, and favourite food of the students"
   puts "To finish, just hit return twice"
-
+  
   students = []
 
+  puts "Name?"
   name = gets.chomp
 
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    puts "Age?"
+    age = gets.chomp
+    puts "Favourite food?"
+    food = gets.chomp
+
+    students << {name: name, age: age, favourite_food: food, cohort: :november}
     puts "Now we have #{students.count} students"
 
+    puts "Name?"
     name = gets.chomp
   end
 
@@ -39,7 +46,7 @@ end
 def print(names)
   count = 0
   while count < names.length
-    puts "#{count + 1}. #{names[count][:name]} (#{names[count][:cohort]} cohort)"
+    puts "#{count + 1}. #{names[count][:name]} is #{names[count][:age]} and likes #{names[count][:favourite_food]} (#{names[count][:cohort]} cohort)"
     count += 1
   end
 end
