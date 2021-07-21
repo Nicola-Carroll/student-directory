@@ -22,7 +22,6 @@ def input_students
   puts "Name?"
   name = gets.chomp
 
-
   while !name.empty? do
     puts "Cohort?"
     cohort = gets.chomp
@@ -61,26 +60,32 @@ def input_students
   students
 end
 
-def print_header
-  puts "The students of Villains Academy".center(200)
-  puts "-------------".center(200)
+def print_header(names)
+  if !names.empty?
+    puts "The students of Villains Academy".center(200)
+    puts "-------------".center(200)
+  end
 end
 
 def print(names)
-  count = 0
-  while count < names.length
-    puts "#{count + 1}. #{names[count][:name]} (#{names[count][:cohort]} cohort)".center(200)
-    count += 1
+  if !names.empty?
+    count = 0
+    while count < names.length
+      puts "#{count + 1}. #{names[count][:name]} (#{names[count][:cohort]} cohort)".center(200)
+      count += 1
+    end
   end
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great #{names.count > 1 ? "students" : "student"}"
+  if !names.empty?
+    puts "Overall, we have #{names.count} great #{names.count > 1 ? "students" : "student"}"
+  end
 end
 
 students = input_students
 
-print_header
+print_header(students)
 print(students)
 print_footer(students)
 
