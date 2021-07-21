@@ -97,23 +97,23 @@ def show_students
 end
 
 def save_students(filename)
-  file = File.open(filename, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  file = File.open(filename, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
   puts "Students saved"
 end
 
 def load_students(filename)
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    update_student_list(name, cohort)
+  file = File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      update_student_list(name, cohort)
+    end
   end
-  file.close
   puts "Students loaded"
 end
 
@@ -134,9 +134,8 @@ def process_menu_selection(selection)
     when "1"
       puts "Please enter the name and cohort if known of the students"
       puts "To finish, just hit return twice"
-      @students = input_students
+      input_students
     when "2"
-      # show the students
       show_students
     when "3"
       puts "What filename? Required format: ***.csv"
