@@ -13,12 +13,28 @@
 #   {name: "Norman Bates", cohort: :november}
 # ]
 @students = []
+@months = [
+  'january',
+  'february',
+  'march',
+  'april',
+  'may',
+  'june',
+  'july',
+  'august',
+  'september',
+  'october',
+  'november',
+  'december'
+]
+
+def update_student_list(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
 
 def input_students
   puts "Please enter the name and cohort if known of the students"
   puts "To finish, just hit return twice"
-  
-  students = []
 
   puts "Name?"
   name = STDIN.gets.chomp
@@ -26,23 +42,8 @@ def input_students
   while !name.empty? do
     puts "Cohort?"
     cohort = STDIN.gets.chomp
-
-    months = [
-      'january',
-      'february',
-      'march',
-      'april',
-      'may',
-      'june',
-      'july',
-      'august',
-      'september',
-      'october',
-      'november',
-      'december'
-    ]
     
-    while !months.include?(cohort) do
+    while !@months.include?(cohort) do
       if cohort.empty?
         cohort = 'november'
       else
@@ -51,14 +52,14 @@ def input_students
       end
     end
 
-    students << {name: name, cohort: cohort.to_sym}
-    puts "Now we have #{students.count} #{students.count > 1 ? "students" : "student"}"
+    update_student_list(name, cohort)
+    puts "Now we have #{@students.count} #{@students.count == 1 ? "student" : "students"}"
 
     puts "Name?"
     name = STDIN.gets.chomp
   end
 
-  students
+  @students
 end
 
 def print_header
@@ -80,7 +81,7 @@ end
 
 def print_footer
   if !@students.empty?
-    puts "Overall, we have #{@students.count} great #{@students.count > 1 ? "students" : "student"}"
+    puts "Overall, we have #{@students.count} great #{@students.count == 1 ? "student" : "students"}"
   end
 end
 
@@ -112,7 +113,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    update_student_list(name, cohort)
   end
   file.close
 end
