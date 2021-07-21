@@ -33,9 +33,6 @@ def update_student_list(name, cohort)
 end
 
 def input_students
-  puts "Please enter the name and cohort if known of the students"
-  puts "To finish, just hit return twice"
-
   puts "Name?"
   name = STDIN.gets.chomp
 
@@ -88,8 +85,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a csv"
+  puts "4. Load the list from a csv"
   puts "9. Exit"
 end
 
@@ -99,23 +96,25 @@ def show_students
   print_footer
 end
 
-def save_students
-  file = File.open("students.csv", "w")
+def save_students(filename)
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  puts "Students saved"
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     update_student_list(name, cohort)
   end
   file.close
+  puts "Students loaded"
 end
 
 def try_load_students
@@ -130,19 +129,25 @@ def try_load_students
   end
 end
 
-def process(selection)
+def process_menu_selection(selection)
   case selection
     when "1"
-      # input students
+      puts "Please enter the name and cohort if known of the students"
+      puts "To finish, just hit return twice"
       @students = input_students
     when "2"
       # show the students
       show_students
     when "3"
-      save_students
+      puts "What filename? Required format: ***.csv"
+      filename = gets.chomp
+      save_students(filename)
     when "4"
-      load_students
+      puts "What filename? Required format: ***.csv"
+      filename = gets.chomp
+      load_students(filename)
     when "9"
+      puts "Goodbye!"
       exit
     else
       puts "I don't know what you meant, try again"
@@ -153,7 +158,7 @@ def interactive_menu
   try_load_students
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    process_menu_selection(STDIN.gets.chomp)
   end
 end
 
