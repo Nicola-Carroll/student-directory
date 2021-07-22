@@ -1,17 +1,5 @@
-# # print the list of students
-# students = [
-#   {name: "Dr. Hannibal Lecter", cohort: :november},
-#   {name: "Darth Vader", cohort: :november},
-#   {name: "Nurse Ratched", cohort: :november},
-#   {name: "Michael Corleone", cohort: :november},
-#   {name: "Alex DeLarge", cohort: :november},
-#   {name: "The Wicked Witch of the West", cohort: :november},
-#   {name: "Terminator", cohort: :november},
-#   {name: "Freddy Krueger", cohort: :november},
-#   {name: "The Joker", cohort: :november},
-#   {name: "Joffrey Baratheon", cohort: :november},
-#   {name: "Norman Bates", cohort: :november}
-# ]
+require 'csv'
+
 @students = []
 @months = [
   'january',
@@ -97,22 +85,19 @@ def show_students
 end
 
 def save_students(filename)
-  file = File.open(filename, "w") do |file|
+  CSV.open(filename, "wb") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << student_data
     end
   end
   puts "Students saved"
 end
 
 def load_students(filename)
-  file = File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      update_student_list(name, cohort)
-    end
+  CSV.foreach(filename) do |line|
+    name, cohort = line
+    update_student_list(name, cohort)
   end
   puts "Students loaded"
 end
